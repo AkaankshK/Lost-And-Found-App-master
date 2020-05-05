@@ -1,0 +1,62 @@
+{
+  "locate": "Current Location",
+  "lng": "EN",
+  "new": " Latest Posts",
+  "missing": "LOST",
+  "complete": "ALL",
+  "title": "FIND YOUR THINGS",
+  " Lost or Found ": "CREATE Your Lost or Found Add",
+  "found_item": "FOUND",
+  "see_all": "VIEW ALL",
+  "home": "Home",
+  "new_ad": "Create Ad",
+  "our_ads": "MY Ads",
+  "communicate": "Chat",
+  "person": "My account",
+  "about": "About Us",
+  "report": "Create Report",
+  "category": "Category",
+  "Select_category": "Select a Category",
+  "post_title": "Post Type",
+  "urgent": "Emergency",
+  "agree": "Yes",
+  "disagree": "No",
+  "new_title": "Title",
+  "limit": "Atleast 60 characters needed",
+  "describe": "Description",
+  "imp_info": "Important Information",
+  "prize": "Reward",
+  "negotiate": "Is reward negotiable",
+  "nm_city": "City",
+  "next": "Next",
+  "MOBILE": "MOBILE",
+  "PEOPLE": "PEOPLE",
+  "BAGS": "BAGS",
+  "PETS": "PETS",
+  "VEHICLES": "VEHICLES",
+  "DOCUMENTS": "DOCUMENTS",
+  "Select_a_Category": "Select a Category",
+  "Language": "Select Language",
+  "preference": "We will remember your preference.",
+  "Eng": "English",
+  "Bang": "Bangla",
+  "Hindi": "Hindi",
+  "app": " Search India",
+  
+  "TOYS":"TOYS",
+
+  "OTHERS":"OTHERS",
+
+  "KEYS":"KEYS",
+
+  "FASHION":"KEYS",
+
+  "JEWELLERY":"JEWELLERY",
+
+  "LAPTOP":"LAPTOP",
+
+  "SPORTS":"SPORTS",
+
+   "WATCHES": "WATCHES",
+  "search" : "Search India is the digital platform for lost and found.\nWe provide our service all over India.\n\nWe provide the most efficient service it comes to searching for your lost items.Search India provides service to both rural and urban areas.Documents, items lost once logged with us will be return to your address within a span time."
+}
