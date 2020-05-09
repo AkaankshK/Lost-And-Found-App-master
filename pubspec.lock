@@ -15,6 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.1"
+  autocomplete_textfield:
+    dependency: "direct main"
+    description:
+      name: autocomplete_textfield
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.7.3"
   boolean_selector:
     dependency: transitive
     description:
@@ -245,8 +252,22 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
-  google_maps_webservice:
+  google_maps_flutter:
     dependency: transitive
+    description:
+      name: google_maps_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.27+1"
+  google_maps_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
+  google_maps_webservice:
+    dependency: "direct main"
     description:
       name: google_maps_webservice
       url: "https://pub.dartlang.org"
@@ -371,6 +392,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.23.1"
+  search_map_place:
+    dependency: "direct main"
+    description:
+      name: search_map_place
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   share:
     dependency: "direct main"
     description:
@@ -432,6 +460,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  stream_transform:
+    dependency: transitive
+    description:
+      name: stream_transform
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   string_scanner:
     dependency: transitive
     description:

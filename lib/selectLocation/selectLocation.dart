@@ -11,7 +11,7 @@ class _SelectLocationState extends State<SelectLocation> {
     "America",
     "Brazil",
     "Canada",
-    "Dubai",
+    "UAE",
     "England",
     "France",
     "Germany",

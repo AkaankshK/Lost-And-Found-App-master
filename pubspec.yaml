@@ -42,6 +42,9 @@ dependencies:
   firebase_messaging: ^6.0.12
   share: ^0.6.3+6
   flutter_tags:
+  autocomplete_textfield:
+  search_map_place:
+  google_maps_webservice:
 
 dev_dependencies:
   flutter_test:

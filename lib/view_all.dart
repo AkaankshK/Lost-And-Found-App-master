@@ -177,7 +177,7 @@ class _ViewAllState extends State<ViewAll> {
         controller: _searchEdit,
         decoration: InputDecoration(
           suffixIcon: Icon(Icons.search),
-          hintText: " Search Ads by location",
+          hintText: " Search Ads by Category or Location",
           hintStyle: new TextStyle(color: Colors.grey[300]),
         ),
         textAlign: TextAlign.left,
@@ -189,10 +189,12 @@ class _ViewAllState extends State<ViewAll> {
     selectedItems = List();
     for (int i = 0; i < dataList.length; i++) {
       var item = dataList[i].location;
+      var name=dataList[i].name;
 
-      if (item.toLowerCase().contains(_searchText.toLowerCase())) {
+      if (item.toLowerCase().contains(_searchText.toLowerCase()) || name.toLowerCase().contains(_searchText.toLowerCase())) {
         selectedItems.add(dataList[i]);
       }
+
     }
     return _searchAddList();
   }

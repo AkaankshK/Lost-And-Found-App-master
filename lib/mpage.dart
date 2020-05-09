@@ -4,18 +4,25 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:search_india/customDialogBox.dart';
 import 'package:search_india/categ_adds.dart';
 import 'package:search_india/first_screen.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:search_india/lost_found.dart';
+import 'package:search_india/selectLocation/Location.dart';
 import 'selectLocation/selectLocation.dart';
 import 'package:search_india/view_all.dart';
 import 'about_us.dart';
 
 String currentLocation = "";
 bool addressSet = false;
+String apiKey="AIzaSyD8IRf3qxELm874q-zPVKgo79xs0PJIwro";
+GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: apiKey);
+
+
 
 class MainPage2 extends StatefulWidget {
   @override
@@ -24,6 +31,9 @@ class MainPage2 extends StatefulWidget {
 
 class _MainPage2State extends State<MainPage2>
     with SingleTickerProviderStateMixin {
+  final double lat=null;
+  final double lng=null;
+
   TabController tabController;
   ScrollController scrollController;
   Position _currentPosition;
@@ -51,21 +61,22 @@ class _MainPage2State extends State<MainPage2>
       setState(() {
         _currentPosition = p;
       });
-      _getAddress();
+      _getAddress(_currentPosition.latitude,_currentPosition.longitude);
     }).catchError((e) {
       print(e);
     });
   }
 
-  _getAddress() async {
+  _getAddress(double lat,double lon) async {
     try {
       List<Placemark> p = await geoLocator.placemarkFromCoordinates(
-          _currentPosition.latitude, _currentPosition.longitude);
+          lat,lon);
       Placemark place = p[0];
 
       setState(() {
         currentLocation =
             "${place.locality}, ${place.postalCode}, ${place.country}";
+        addressSet=true;
       });
     } catch (e) {
       print(e);
@@ -85,9 +96,21 @@ class _MainPage2State extends State<MainPage2>
           },
         ),
         title: InkWell(
-            onTap: () {
-              Navigator.push(context,
+            onTap: () async {
+             Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SelectLocation()));
+//              Prediction p = await PlacesAutocomplete.show(
+//                context: context,
+//                apiKey: apiKey,
+//                language: "en",
+//              );
+//              PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p.placeId);
+//              final lat = detail.result.geometry.location.lat;
+//              final lng = detail.result.geometry.location.lng;
+//              setState(() {
+//                _getAddress(lat, lng);
+//              });
+
             },
             child: Text(currentLocation)),
         actions: <Widget>[
@@ -222,6 +245,10 @@ class _MainPage2State extends State<MainPage2>
             "Bang".tr(),
           );
         });
+  }
+
+  void getLocation() {
+
   }
 }
 

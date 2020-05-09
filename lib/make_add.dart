@@ -1,11 +1,16 @@
-
-
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:search_india/add_mid.dart';
 import 'package:search_india/register_page.dart';
+
+String apiKey="AIzaSyD8IRf3qxELm874q-zPVKgo79xs0PJIwro";
+GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: apiKey);
+
 
 class CreateAdd extends StatefulWidget {
   @override
@@ -13,11 +18,14 @@ class CreateAdd extends StatefulWidget {
 }
 
 class _CreateAddState extends State<CreateAdd> {
+
+   double lat=null;
+   double lng=null;
+
+  GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
-  List _tagItems=[
-    "lost",
-    "found"
-  ];
+  List _tagItems = ["lost", "found"];
+  String currentText = "";
   int a = 0;
   int b = 0;
   int c = 0;
@@ -56,6 +64,8 @@ class _CreateAddState extends State<CreateAdd> {
   ];
   Position _currentPosition;
 
+   final cityController=new TextEditingController();
+
   _getCurrentLocation() {
     geoLocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
@@ -63,16 +73,16 @@ class _CreateAddState extends State<CreateAdd> {
       setState(() {
         _currentPosition = p;
       });
-      _getAddress();
+      _getAddress(_currentPosition.latitude,_currentPosition.longitude);
     }).catchError((e) {
       print(e);
     });
   }
 
-  _getAddress() async {
+  _getAddress(double lat,double lng) async {
     try {
       List<Placemark> p = await geoLocator.placemarkFromCoordinates(
-          _currentPosition.latitude, _currentPosition.longitude);
+          lat,lng);
       Placemark place = p[0];
 
       setState(() {
@@ -102,24 +112,23 @@ class _CreateAddState extends State<CreateAdd> {
       },
     );
   }
-   Widget city(){
-    return DropdownButton<String>(
 
-      hint:  Text("Select your City"),
-      items: cities.map((String value){
+  Widget city() {
+    return DropdownButton<String>(
+      hint: Text("Select your City"),
+      items: cities.map((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
         );
       }).toList(),
-      onChanged: (value){
+      onChanged: (value) {
         setState(() {
-          cityname=value;
-
+          cityname = value;
         });
       },
     );
-   }
+  }
 
   DropdownButton<String> androidDropdown2(currenciesList) {
     List<DropdownMenuItem<String>> dropdownItems = [];
@@ -156,6 +165,23 @@ class _CreateAddState extends State<CreateAdd> {
       },
     );
   }
+
+  final keys = ["Car Keys", "Other Keys"];
+
+  final sports=[
+    "Cricket",
+    "Gym Equiment",
+    "Football",
+    "Basketball",
+    "Volleyball",
+    "Badminton",
+    "Tennis"
+  ];
+
+  final laptops = [
+    "MacBook",
+    "Windows PC"
+  ];
 
   final ist = [
     'Car',
@@ -211,10 +237,7 @@ class _CreateAddState extends State<CreateAdd> {
   ];
   final pets = ['Cats', 'Dogs', 'Cows', 'Others'];
   final phones = ['Android', 'iPhone', 'Tablets', 'Mobile Accessories'];
-  final keys = [
-    'Car keys',
-    'Other',
-  ];
+
 
   final jewellery = [
     'Ring',
@@ -225,9 +248,53 @@ class _CreateAddState extends State<CreateAdd> {
     'Others',
   ];
 
-  final cities =[
-    "Mumbai", "Delhi", "Bangalore", "Chennai", "Hyderabad", "Ahmedabad", "Kolkata"," Surat",
-    "Pune", "Jaipur", "Lucknow", "Kanpur", "Nagpur", "Visakhapatnam", "Indore", "Thane", "Bhopal", "Pimpri-Chinchwad", "Patna", "Vadodara", "Ghaziabad", "Ludhiana", "Coimbatore", "Agra", "Madurai", "Nashik", "Vijayawada", "Faridabad", "Meerut", "Rajkot", "Kalyan-Dombivali", "Vasai-Virar", "Varanasi", "Srinagar", "Aurangabad", "Dhanbad", "Amritsar", "Navi Mumbai", "Allahabad", "Ranchi", "Howrah", "Jabalpur", "Gwalior", "Jodhpur", "Raipur", "Kota",
+  final cities = [
+    "Mumbai",
+    "Delhi",
+    "Bangalore",
+    "Chennai",
+    "Hyderabad",
+    "Ahmedabad",
+    "Kolkata",
+    " Surat",
+    "Pune",
+    "Jaipur",
+    "Lucknow",
+    "Kanpur",
+    "Nagpur",
+    "Visakhapatnam",
+    "Indore",
+    "Thane",
+    "Bhopal",
+    "Pimpri-Chinchwad",
+    "Patna",
+    "Vadodara",
+    "Ghaziabad",
+    "Ludhiana",
+    "Coimbatore",
+    "Agra",
+    "Madurai",
+    "Nashik",
+    "Vijayawada",
+    "Faridabad",
+    "Meerut",
+    "Rajkot",
+    "Kalyan-Dombivali",
+    "Vasai-Virar",
+    "Varanasi",
+    "Srinagar",
+    "Aurangabad",
+    "Dhanbad",
+    "Amritsar",
+    "Navi Mumbai",
+    "Allahabad",
+    "Ranchi",
+    "Howrah",
+    "Jabalpur",
+    "Gwalior",
+    "Jodhpur",
+    "Raipur",
+    "Kota",
   ];
 
   final _formKey = GlobalKey<FormState>();
@@ -237,6 +304,12 @@ class _CreateAddState extends State<CreateAdd> {
     super.initState();
     _getCurrentLocation();
   }
+
+   @override
+   void dispose() {
+     cityController.dispose();
+     super.dispose();
+   }
 
 //TODO: Make alert list of options and add more
   @override
@@ -270,20 +343,20 @@ class _CreateAddState extends State<CreateAdd> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8.0, top: 10.0),
-                child: RichText(
-                  text: TextSpan(
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,),
-                    children: <TextSpan>[
-                      TextSpan(text: "Category "),
-                      TextSpan(text: "*",style: TextStyle(color: Colors.red))
-                    ]
-                  ),
-                )
-              ),
+                  padding: const EdgeInsets.only(left: 8.0, top: 10.0),
+                  child: RichText(
+                    text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(text: "Category "),
+                          TextSpan(
+                              text: "*", style: TextStyle(color: Colors.red))
+                        ]),
+                  )),
 //            IconButton(icon: Icon(Icons.arrow_drop_down),onPressed: ,),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -321,20 +394,46 @@ class _CreateAddState extends State<CreateAdd> {
                                           padding: const EdgeInsets.all(8.0),
                                           child: androidDropdown2(doc),
                                         )
-                                      : (selectedCurrency ==
-                                              'Fashion Accessories')
+                                      : (selectedCurrency == 'Keys')
                                           ? Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: androidDropdown2(fashion),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: androidDropdown2(keys),
                                             )
-                                          : (selectedCurrency == 'Jewellery')
+                                          : (selectedCurrency ==
+                                                  'Fashion Accessories')
                                               ? Padding(
                                                   padding:
                                                       const EdgeInsets.all(8.0),
                                                   child:
-                                                      androidDropdown2(jewellery),
-                                                )
-                                              : Container(),
+                                                      androidDropdown2(fashion),
+                                                ) :
+                (selectedCurrency ==
+                  'Laptop')
+                  ? Padding(
+                padding:
+                const EdgeInsets.all(8.0),
+                child:
+                androidDropdown2(laptops),
+              ) :
+                (selectedCurrency ==
+                    'Sports Equipment')
+                    ? Padding(
+                  padding:
+                  const EdgeInsets.all(8.0),
+                  child:
+                  androidDropdown2(sports),
+                )
+                                              : (selectedCurrency ==
+                                                      'Jewellery')
+                                                  ? Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: androidDropdown2(
+                                                          jewellery),
+                                                    )
+                                                  : Container(),
               Padding(
                 padding: const EdgeInsets.only(
                   left: 8.0,
@@ -349,12 +448,13 @@ class _CreateAddState extends State<CreateAdd> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
-                            color: Colors.black,),
+                            color: Colors.black,
+                          ),
                           children: <TextSpan>[
                             TextSpan(text: "Post Type "),
-                            TextSpan(text: "*",style: TextStyle(color: Colors.red))
-                          ]
-                      ),
+                            TextSpan(
+                                text: "*", style: TextStyle(color: Colors.red))
+                          ]),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -405,8 +505,8 @@ class _CreateAddState extends State<CreateAdd> {
                               ),
                               Text(
                                 'Found',
-                                style:
-                                    TextStyle(fontSize: 18, color: Colors.black),
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.black),
                               ),
                             ],
                           ),
@@ -421,26 +521,25 @@ class _CreateAddState extends State<CreateAdd> {
                 color: Colors.grey.withAlpha(100),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 8.0,
-                ),
-                child:RichText(
-                  text: TextSpan(
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,),
-                      children: <TextSpan>[
-                        TextSpan(text: "Title "),
-                        TextSpan(text: "*",style: TextStyle(color: Colors.red))
-                      ]
+                  padding: const EdgeInsets.only(
+                    left: 8.0,
                   ),
-                )
-              ),
+                  child: RichText(
+                    text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(text: "Title "),
+                          TextSpan(
+                              text: "*", style: TextStyle(color: Colors.red))
+                        ]),
+                  )),
               TextFormField(
-
-                validator: (value){
-                  if(value.isEmpty){
+                validator: (value) {
+                  if (value.isEmpty) {
                     return "Please Enter Title";
                   }
                   return null;
@@ -462,26 +561,25 @@ class _CreateAddState extends State<CreateAdd> {
                 color: Colors.grey,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                ),
-                child: RichText(
-                  text: TextSpan(
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,),
-                      children: <TextSpan>[
-                        TextSpan(text: "Description "),
-                        TextSpan(text: "*",style: TextStyle(color: Colors.red))
-                      ]
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0,
                   ),
-                )
-              ),
+                  child: RichText(
+                    text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(text: "Description "),
+                          TextSpan(
+                              text: "*", style: TextStyle(color: Colors.red))
+                        ]),
+                  )),
               TextFormField(
-
-                validator: (value){
-                  if(value.isEmpty){
+                validator: (value) {
+                  if (value.isEmpty) {
                     return "Please Enter Description";
                   }
                   return null;
@@ -504,26 +602,25 @@ class _CreateAddState extends State<CreateAdd> {
                 color: Colors.grey,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                ),
-                child:RichText(
-                  text: TextSpan(
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,),
-                      children: <TextSpan>[
-                        TextSpan(text: "Last Location of Lost & Found "),
-                        TextSpan(text: "*",style: TextStyle(color: Colors.red))
-                      ]
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0,
                   ),
-                )
-              ),
+                  child: RichText(
+                    text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(text: "Last Location of Lost & Found "),
+                          TextSpan(
+                              text: "*", style: TextStyle(color: Colors.red))
+                        ]),
+                  )),
               TextFormField(
-
-                validator: (value){
-                  if(value.isEmpty){
+                validator: (value) {
+                  if (value.isEmpty) {
                     return "Please Enter Last seen Location";
                   }
                   return null;
@@ -771,18 +868,17 @@ class _CreateAddState extends State<CreateAdd> {
                 child: Tags(
                   key: _tagStateKey,
                   textField: TagsTextField(
-                    width: MediaQuery.of(context).size.width,
-                    hintText: "Enter a New Tag",
-                    textStyle: TextStyle(fontSize: 18),
-                    onSubmitted: (String str){
-                      setState(() {
-                        _tagItems.add(str);
-                      });
-                    }
-                  ),
+                      width: MediaQuery.of(context).size.width,
+                      hintText: "Enter a New Tag",
+                      textStyle: TextStyle(fontSize: 18),
+                      onSubmitted: (String str) {
+                        setState(() {
+                          _tagItems.add(str);
+                        });
+                      }),
                   itemCount: _tagItems.length,
-                  itemBuilder: (int index){
-                    final item= _tagItems[index];
+                  itemBuilder: (int index) {
+                    final item = _tagItems[index];
                     return ItemTags(
                       key: Key(index.toString()),
                       index: index,
@@ -800,29 +896,25 @@ class _CreateAddState extends State<CreateAdd> {
 //                        return true;
 //                      }
 //                    ),
-
-
                     );
                   },
-
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8.0, top: 8.0),
-                child: RichText(
-                  text: TextSpan(
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,),
-                      children: <TextSpan>[
-                        TextSpan(text: "City "),
-                        TextSpan(text: "*",style: TextStyle(color: Colors.red))
-                      ]
-                  ),
-                )
-              ),
-
+                  padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+                  child: RichText(
+                    text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(text: "City "),
+                          TextSpan(
+                              text: "*", style: TextStyle(color: Colors.red))
+                        ]),
+                  )),
 
 //            Padding(
 //              padding: const EdgeInsets.all(8.0),
@@ -830,26 +922,76 @@ class _CreateAddState extends State<CreateAdd> {
 //                child: city(),
 //              ),
 //            ),
-              TextFormField(
-
-                validator: (value){
-                  if(value.isEmpty){
-                    return "Please Enter City";
-                  }
-                  return null;
-                },
-                style: TextStyle(fontSize: 16, color: Colors.black),
-                onChanged: (val) {
-                  if (val != "" || val != null) cityname = val;
-                },
-                decoration: InputDecoration(
-                  hintText: cityname == null ? 'City' : cityname,
+//              SimpleAutoCompleteTextField(
+//                key: key,
+//                submitOnSuggestionTap: true,
+//                clearOnSubmit: false,
+//                suggestions: cities,
+////                validator: (value){
+////                  if(value.isEmpty){
+////                    return "Please Enter City";
+////                  }
+////                  return null;
+////                },
+//                style: TextStyle(fontSize: 16, color: Colors.black),
+//                textSubmitted: (val) {
+//                  setState(() {
+//                    cityname = val;
+//                    currentText = val;
+//                    print(cityname);
+//                  });
+//                },
+//
+//                textChanged: (val) {
+//                  setState(() {
+//                    cityname = val;
+//                    currentText = val;
+//                    print(cityname);
+//                  });
+//                },
+//
+//                decoration: InputDecoration(
+//                  hintText: currentText == null ? 'City' : currentText,
+//                  hintStyle: TextStyle(color: Colors.grey),
+//                  border: OutlineInputBorder(
+//                    borderSide: BorderSide.none,
+//                  ),
+//                ),
+//              ),
+            TextFormField(
+                controller: cityController,
+              decoration: InputDecoration(
+                 hintText: cityname == null ? 'City' : cityname,
                   hintStyle: TextStyle(color: Colors.grey),
                   border: OutlineInputBorder(
                     borderSide: BorderSide.none,
                   ),
-                ),
               ),
+              onTap: ()async{
+                Prediction p = await PlacesAutocomplete.show(
+                  context: context,
+                  apiKey: apiKey,
+                  language: "en",
+                );
+                PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p.placeId);
+                 lat = detail.result.geometry.location.lat;
+                 lng = detail.result.geometry.location.lng;
+                List<Placemark> p1 = await geoLocator.placemarkFromCoordinates(
+                    lat,lng);
+                Placemark place = p1[0];
+                print(p1[0]);
+                setState(() {
+
+                  cityname=place.locality;
+                  print(cityname);
+                  cityController.text=place.locality;
+                  print(cityController.text);
+                  p=null;
+                });
+
+              },
+
+            ),
               Divider(
                 thickness: 1,
                 color: Colors.grey,
@@ -859,13 +1001,11 @@ class _CreateAddState extends State<CreateAdd> {
               ),
               GestureDetector(
                 onTap: () {
-                  if(_formKey.currentState.validate()){
-
+                  if (_formKey.currentState.validate()) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => MakeAdd(
-
                           map: {
                             'reward': reward == null ? "0" : reward,
                             'category': selectedCurrency,
@@ -874,13 +1014,11 @@ class _CreateAddState extends State<CreateAdd> {
                             'city': cityname,
                             'desc': desc,
                             'tags': getTags(),
-
                           },
                         ),
                       ),
                     );
                   }
-
                 },
                 child: Center(
                   child: Container(
@@ -909,11 +1047,12 @@ class _CreateAddState extends State<CreateAdd> {
   }
 
   String getTags() {
-    var tagslist="";
+    var tagslist = "";
     _tagItems.forEach((element) {
-      tagslist+=element+",";
+      tagslist += element + ",";
     });
     print(tagslist);
     return tagslist;
   }
+
 }
