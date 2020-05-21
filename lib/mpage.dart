@@ -266,70 +266,12 @@ class _Wid1State extends State<Wid1> {
           height: 330,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/maskGroup3.png'),
+              image: AssetImage('assets/logo search.png'),
 //              colorFilter: ColorFilter.mode(Colors.grey, BlendMode.exclusion),
               fit: BoxFit.fitWidth,
             ),
           ),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(32),
-                child: Center(
-                    child: Text(
-                  'LOGO',
-                  style: TextStyle(fontSize: 60),
-                )),
-//            child: Row(
-//              crossAxisAlignment: CrossAxisAlignment.stretch,
-//              children: <Widget>[
-//                Expanded(
-//                  child: Image(
-//                    image: AssetImage('images/splash.png'),
-//                    fit: BoxFit.cover,
-//                  ),
-//                ),
-//                Expanded(
-//                  child: Container(
-//                    decoration: BoxDecoration(
-//                      color: Colors.black.withOpacity(0.2),
-//                    ),
-//                    child: Column(
-//                      mainAxisAlignment: MainAxisAlignment.center,
-//                      children: <Widget>[
-//                        Padding(
-//                          padding: const EdgeInsets.symmetric(horizontal: 7.0),
-//                          child: Text(
-//                            'title',
-//                            style: TextStyle(
-//                                fontSize: 22,
-//                                color: Colors.black,
-//                                fontWeight: FontWeight.bold,
-//                                letterSpacing: 1.2),
-//                          ).tr(),
-//                        ),
-//                        Padding(
-//                          padding: const EdgeInsets.symmetric(horizontal: 7),
-//                          child: Text(
-//                            ' Lost or Found ',
-//                            style: TextStyle(
-//                                fontSize: 18,
-//                                color: Colors.white,
-//                                letterSpacing: 1.2),
-//                          ).tr(),
-//                        ),
-//                      ],
-//                    ),
-//                  ),
-//                )
-//              ],
-//            ),
-              ),
-              SizedBox(
-                height: 50,
-              ),
-            ],
-          ),
+
         ),
       ],
     );
@@ -569,7 +511,7 @@ class _Wid2State extends State<Wid2> {
                 SizedBox(
                   height: 8,
                 ),
-                Text('FASHION').tr()
+                Text("FASHION ACC.").tr()
               ],
             ),
             SizedBox(

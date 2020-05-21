@@ -33,6 +33,8 @@ class _CreateAddState extends State<CreateAdd> {
   String brand;
   String lastloc;
   String name;
+  String imei;
+  String serialno;
   String age;
   String gender;
   String color;
@@ -113,10 +115,11 @@ class _CreateAddState extends State<CreateAdd> {
     );
   }
 
-  Widget city() {
+  Widget ageList() {
     return DropdownButton<String>(
-      hint: Text("Select your City"),
-      items: cities.map((String value) {
+      value: age,
+      hint: Text("Select Age"),
+      items: agelist.map((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),
@@ -124,7 +127,7 @@ class _CreateAddState extends State<CreateAdd> {
       }).toList(),
       onChanged: (value) {
         setState(() {
-          cityname = value;
+          age = value;
         });
       },
     );
@@ -165,6 +168,13 @@ class _CreateAddState extends State<CreateAdd> {
       },
     );
   }
+  final agelist=[
+    "1-17",
+    "18-25",
+    "26-30",
+    "31-40",
+    "41-50"
+  ];
 
   final keys = ["Car Keys", "Other Keys"];
 
@@ -175,12 +185,17 @@ class _CreateAddState extends State<CreateAdd> {
     "Basketball",
     "Volleyball",
     "Badminton",
-    "Tennis"
+    "Tennis",
+    "Other",
   ];
 
   final laptops = [
-    "MacBook",
-    "Windows PC"
+    "Dell",
+    "HP",
+    "Apple",
+    "Acer",
+    "Asus",
+    "Others",
   ];
 
   final ist = [
@@ -214,7 +229,7 @@ class _CreateAddState extends State<CreateAdd> {
     'Woman',
     'Male Senior Citizen',
     'Female Senior Citizen',
-    'Physically Challenged'
+    'Physically Challenged',
         'Senior citizen',
   ];
   final doc = [
@@ -642,13 +657,8 @@ class _CreateAddState extends State<CreateAdd> {
                 thickness: 1,
                 color: Colors.grey,
               ),
-              (selectedCurrency == "Other" ||
-                      selectedCurrency == "Jewellery" ||
-                      selectedCurrency == "Toys" ||
-                      selectedCurrency == "Fashion Accessories" ||
-                      selectedCurrency == "Keys" ||
-                      selectedCurrency == "Laptop")
-                  ? Column(
+
+              Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -683,15 +693,9 @@ class _CreateAddState extends State<CreateAdd> {
                           color: Colors.grey,
                         ),
                       ],
-                    )
-                  : Container(),
-              (selectedCurrency == "Other" ||
-                      selectedCurrency == "Jewellery" ||
-                      selectedCurrency == "Toys" ||
-                      selectedCurrency == "Fashion Accessories" ||
-                      selectedCurrency == "Keys" ||
-                      selectedCurrency == "Laptop")
-                  ? Column(
+                    ),
+
+                   Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -726,7 +730,50 @@ class _CreateAddState extends State<CreateAdd> {
                           color: Colors.grey,
                         ),
                       ],
-                    )
+                    ),
+
+              (selectedCurrency == "Other" || selectedCurrency == "Automobile" || selectedCurrency == "Sports Equipment" ||
+                  selectedCurrency == "Jewellery" ||
+                  selectedCurrency == "Toys" ||
+                  selectedCurrency == "Fashion Accessories" ||
+                  selectedCurrency == "Keys" ||
+                  selectedCurrency == "Laptop")
+                  ? Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: Text(
+                      'Model',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    onChanged: (val) {
+                      color = val;
+                    },
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    decoration: InputDecoration(
+                      hintText: 'Specify Model if applicable',
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+                ],
+              )
                   : Container(),
               (selectedCurrency == "People")
                   ? Column(
@@ -767,28 +814,27 @@ class _CreateAddState extends State<CreateAdd> {
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8.0,
                           ),
-                          child: Text(
-                            'Age',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                            ),
+                          child:RichText(
+                            text: TextSpan(
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(text: "Age "),
+                                  TextSpan(
+                                      text: "*", style: TextStyle(color: Colors.red))
+                                ]),
                           ),
                         ),
-                        TextField(
-                          onChanged: (val) {
-                            name = val;
-                          },
-                          style: TextStyle(fontSize: 16, color: Colors.black),
-                          decoration: InputDecoration(
-                            hintText: 'Specify the age',
-                            hintStyle: TextStyle(color: Colors.grey),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0,
                           ),
+                          child: ageList()
                         ),
+
                         Divider(
                           thickness: 1,
                           color: Colors.grey,
@@ -796,6 +842,331 @@ class _CreateAddState extends State<CreateAdd> {
                       ],
                     )
                   : Container(),
+              (selectedCurrency == "Pets")
+                  ? Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      RichText(
+                        text: TextSpan(
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(text: "Sex "),
+                              TextSpan(
+                                  text: "*", style: TextStyle(color: Colors.red))
+                            ]),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Radio(
+                                  value: 0,
+                                  activeColor: Colors.black,
+                                  onChanged: (i) {
+                                    setState(() {
+                                      b = i;
+                                    });
+                                  },
+                                  groupValue: b,
+                                ),
+                                Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(color: Colors.black)),
+                                  ),
+                                  child: Text(
+                                    'Male',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Radio(
+                                  value: 1,
+                                  activeColor: Colors.black,
+                                  onChanged: (i) {
+                                    setState(() {
+                                      b = i;
+                                    });
+                                  },
+                                  groupValue: b,
+                                ),
+                                Text(
+                                  'Female',
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.black),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: Text(
+                      'Name',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    onChanged: (val) {
+                      name = val;
+                    },
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    decoration: InputDecoration(
+                      hintText: 'Please mention Name of the pet',
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: Text(
+                      'Color',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    onChanged: (val) {
+                      color = val;
+                    },
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    decoration: InputDecoration(
+                      hintText: 'Please mention color of the pet',
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: Text(
+                      'Age',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    onChanged: (val) {
+                      age = val;
+                    },
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    decoration: InputDecoration(
+                      hintText: 'Specify the age',
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+                ],
+              )
+                  : Container(),
+
+              (selectedCurrency == "Mobile")
+                  ? Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: Text(
+                      'IMEI NUMBER',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    onChanged: (val) {
+                      imei = val;
+                    },
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    decoration: InputDecoration(
+                      hintText: 'Enter IMEI Number',
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: Text(
+                      'Serial Number',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    onChanged: (val) {
+                      serialno = val;
+                    },
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    decoration: InputDecoration(
+                      hintText: "Enter Serial Number",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+                ],
+              )
+                  : Container(),
+              (selectedCurrency == "Documents")
+                  ? Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: Text(
+                      'Serial Number',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    onChanged: (val) {
+                      serialno = val;
+                    },
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    decoration: InputDecoration(
+                      hintText: "Enter Serial Number",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+                ],
+              )
+                  : Container(),
+              (selectedCurrency == "Automobile")
+                  ? Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                    ),
+                    child: Text(
+                      'Registration Number',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  TextField(
+                    onChanged: (val) {
+                      serialno = val;
+                    },
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    decoration: InputDecoration(
+                      hintText: "Enter Registration Number",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                    color: Colors.grey,
+                  ),
+                ],
+              )
+                  : Container(),
+
+
 
               Padding(
                 padding: const EdgeInsets.only(
