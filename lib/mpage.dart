@@ -247,9 +247,6 @@ class _MainPage2State extends State<MainPage2>
         });
   }
 
-  void getLocation() {
-
-  }
 }
 
 class Wid1 extends StatefulWidget {
@@ -263,14 +260,20 @@ class _Wid1State extends State<Wid1> {
     return Column(
       children: <Widget>[
         Container(
-          height: 330,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/logo search.png'),
-//              colorFilter: ColorFilter.mode(Colors.grey, BlendMode.exclusion),
-              fit: BoxFit.fitWidth,
-            ),
+              image: AssetImage("assets/maskGroup3.png"),
+              fit: BoxFit.cover
+            )
           ),
+          height: 330,
+         child: Stack(
+           children: [
+             Center(
+               child: Image.asset("assets/logo search.png"),
+             )
+           ],
+         ),
 
         ),
       ],
@@ -511,7 +514,7 @@ class _Wid2State extends State<Wid2> {
                 SizedBox(
                   height: 8,
                 ),
-                Text("FASHION ACC.").tr()
+                Text("FASHION").tr(),
               ],
             ),
             SizedBox(

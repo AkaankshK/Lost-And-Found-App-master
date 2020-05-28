@@ -52,14 +52,10 @@ class _LoginPageState extends State<LoginPage> {
 //                  ),
                 Container(
                   height: MediaQuery.of(context).size.width / 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Center(
-                      child: Text(
-                        'LOGO',
-                        style: TextStyle(fontSize: 50),
-                      ),
-                    ),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/logo search.png")
+                    )
                   ),
                 ),
                 Padding(

@@ -836,6 +836,16 @@ var select=[
 
 List<List<String>> selection;
 
+getCityList(){
+  List<String> citylist=[];
+  for(int i=0;i<select.length;i++){
+     List<String> temp=select[i];
+     for(int j=0;j<temp.length;j++){
+       citylist.add(temp[j]);
+     }
+  }
+  return citylist;
+}
 
 
 class SelectDistrict extends StatefulWidget {

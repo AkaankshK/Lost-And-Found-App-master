@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,15 +18,22 @@ class _AboutUsState extends State<AboutUs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
 //      extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: AppBar(
-      backgroundColor: Colors.black,
-        leading: IconButton(icon: Icon(Icons.arrow_back, color: Colors.white,), onPressed: (){
-          Navigator.pop(context);
-        }),
-        title: Text('About Us', style: TextStyle(color: Colors.white),),
+        backgroundColor: Colors.black,
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        title: Text(
+          'About Us',
+          style: TextStyle(color: Colors.white),
+        ),
 //        actions: <Widget>[
 //          IconButton(
 //            icon: SvgPicture.asset("images/Icon ionic-ios-chatboxes.svg"),
@@ -41,9 +49,9 @@ class _AboutUsState extends State<AboutUs> {
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/maskGroup3.png'),
-              fit: BoxFit.fitWidth,
-            )),
+          image: AssetImage('assets/maskGroup3.png'),
+          fit: BoxFit.fitWidth,
+        )),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -51,37 +59,100 @@ class _AboutUsState extends State<AboutUs> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .width / 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-//              child: Image(
-//                image: AssetImage('images/splash.png'),
-//                fit: BoxFit.fill,
-//                height: 200,
-//                width: 200,
-//              ),
-                  child: Center(
-                    child: Text(
-                      'Lost & Found',
-                      style: TextStyle(fontSize: 42,
-                          fontFamily: "Playfair", fontWeight: FontWeight.w600,
-
-
-                          color: Colors.blue),
-                    ),
+                height: MediaQuery.of(context).size.width / 2,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/logo search.png"))),
+              ),
+              Container(
+                height: 100,
+                child: Center(
+                  child: Text(
+                    'Lost & Found',
+                    style: TextStyle(
+                        fontSize: 42,
+                        fontFamily: "Playfair",
+                        fontWeight: FontWeight.w600,
+                        color: Colors.blue),
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
+//                child: Text(
+//
+//                  // "www.globalsearch.com, is the global search Digital platform where anyone can report their lost and found items. Every found item will be matched with the lost items to reunite with the lawful owner. With more than 99% recovery rate, www.globalsearchnetworks.com deliver secure and convenient service for its users.",
+////                  textAlign: TextAlign.justify,
+//                  style: TextStyle(
+//                    fontSize: 16,
+//                    letterSpacing: 0.8,
+//                  ),
+//                ),
+                child: RichText(
+                  text: TextSpan(children: [
+                    TextSpan(
+                        text: "www.searchglobalnetworks.com",
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.indigo,
+                            decoration: TextDecoration.underline),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => launchWebsite(
+                              "https://www.searchglobalnetworks.com")),
+                    TextSpan(
+                        text:
+                            " is the global search Digital platform where anyone can report their lost and found items. Every found item will be matched with the lost items to reunite with the lawful owner. With more than 99% recovery rate, ",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        )),
+                    TextSpan(
+                        text: "www.searchglobalnetworks.com",
+                        style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.indigo,
+                            decoration: TextDecoration.underline),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => launchWebsite(
+                              "https://www.searchglobalnetworks.com")),
+                    TextSpan(
+                        text:
+                            " deliver secure and convenient service for its users.",
+                        style: TextStyle(color: Colors.black, fontSize: 16)),
+                  ]),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Text(
+                      "How does ",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    GestureDetector(
+                      onTap: () =>
+                          launchWebsite("https://www.globalsearchnetworks.com"),
+                      child: Text("globalsearchnetworks.com",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.indigo,
+                              decoration: TextDecoration.underline)),
+                    ),
+                    Text(" work?",
+                        style: TextStyle(fontWeight: FontWeight.bold))
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc arcu nulla, iaculis et commodo facilisis, consectetur at magna. Etiam imperdiet nisi posuere hendrerit rhoncus. Aenean magna turpis, sodales at nisi nec, posuere tempus mi. Mauris dapibus magna eget tellus accumsan, quis vulputate enim porttitor. Quisque lorem quam, faucibus ac pulvinar non, varius pulvinar erat. Pellentesque eu orci ipsum. Praesent id odio ornare ante iaculis fermentum. Cras euismod, turpis non bibendum pretium, magna urna imperdiet odio, in pellentesque urna arcu nec nibh. Nam ut purus sit amet odio rutrum venenatis vitae non nibh. Aenean auctor velit neque, at lobortis tortor vehicula in. Ut convallis dolor in libero malesuada vulputate.\n\n'
-                      'Aenean commodo pretium dolor a vestibulum. Duis tellus augue, sagittis eget quam sed, maximus fringilla lectus. Aliquam vel arcu lacus. Aliquam ipsum magna, viverra non semper eu, volutpat non leo. Etiam ultrices consectetur egestas. Suspendisse sodales sem at metus ultrices tristique. Suspendisse sed dui nulla. Sed sodales nec mauris at viverra. Phasellus nec sapien vel sem sodales sodales at vulputate neque. Ut imperdiet sem ut dictum cursus. Nunc tortor est, tincidunt ac urna ut, varius mollis dui. Etiam lacinia, risus finibus mollis fringilla, tortor mi mattis purus, sed dignissim nibh ipsum nec neque. In laoreet nulla ante, ut rhoncus neque convallis quis. Mauris pretium elit a aliquam venenatis. Nam augue nulla, posuere sit amet dignissim quis, imperdiet quis nibh.',
+                  "One can log in and create the ad on the large community where everybody potentially take action in searching for what you have lost. Any form of payment can be done in the form of reward on receipt of your lost belongings.",
+                  textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontSize: 16,
+                    fontFamily: "Opensans",
                     letterSpacing: 0.8,
                   ),
                 ),
@@ -89,8 +160,7 @@ class _AboutUsState extends State<AboutUs> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  'How This Works\n\n'
-                      'Aenean commodo pretium dolor a vestibulum. Duis tellus augue, sagittis eget quam sed, maximus fringilla lectus. Aliquam vel arcu lacus. Aliquam ipsum magna, viverra non semper eu, volutpat non leo. Etiam ultrices consectetur egestas. Suspendisse sodales sem at metus ultrices tristique. Suspendisse sed dui nulla. Sed sodales nec mauris at viverra. Phasellus nec sapien vel sem sodales sodales at vulputate neque. Ut imperdiet sem ut dictum cursus. Nunc tortor est, tincidunt ac urna ut, varius mollis dui. Etiam lacinia, risus finibus mollis fringilla, tortor mi mattis purus, sed dignissim nibh ipsum nec neque. In laoreet nulla ante, ut rhoncus neque convallis quis. Mauris pretium elit a aliquam venenatis. Nam augue nulla, posuere sit amet dignissim quis, imperdiet quis nibh.',
+                  "Follow the given three steps to create the ad.",
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: "Opensans",
@@ -99,26 +169,19 @@ class _AboutUsState extends State<AboutUs> {
                   ),
                 ),
               ),
-              Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .width / 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-//              child: Image(
-//                image: AssetImage('images/splash.png'),
-//                fit: BoxFit.fill,
-//                height: 200,
-//                width: 200,
-//              ),
-                  child: Center(
-                    child: Text(
-                      'LOGO',
-                      style: TextStyle(fontSize: 50),
-                    ),
-                  ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  "1. Register with your mobile number and email address.\n\n2. Confirm your registration through the verification link which has sent to the given email address.\n\n3. Start creating ad.\n\nThis independent reporting service allows you to use the same account again for multiple ads without any registration fee.",
+                  textAlign: TextAlign.justify,
                 ),
+              ),
+              Container(
+                height: MediaQuery.of(context).size.width / 2,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/logo search.png"),
+                        fit: BoxFit.fill)),
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -129,12 +192,16 @@ class _AboutUsState extends State<AboutUs> {
                     Row(
                       children: <Widget>[
                         Text('Email:   '),
-                        Text(
-                          'youremail@here.com',
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.indigo,
-                              decoration: TextDecoration.underline),
+                        GestureDetector(
+                          onTap: () =>
+                              launchWebsite("mailto:globalsearch24@gmail.com"),
+                          child: Text(
+                            'globalsearch24@gmail.com',
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.indigo,
+                                decoration: TextDecoration.underline),
+                          ),
                         ),
                       ],
                     ),
@@ -144,12 +211,15 @@ class _AboutUsState extends State<AboutUs> {
                     Row(
                       children: <Widget>[
                         Text('Phone:   '),
-                        Text(
-                          '+91 0000000000',
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.indigo,
-                              decoration: TextDecoration.underline),
+                        GestureDetector(
+                          onTap: () => launchWebsite("tel:+91 7605844146"),
+                          child: Text(
+                            '+91 7605844146',
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.indigo,
+                                decoration: TextDecoration.underline),
+                          ),
                         ),
                       ],
                     ),
@@ -159,12 +229,16 @@ class _AboutUsState extends State<AboutUs> {
                     Row(
                       children: <Widget>[
                         Text('Website: '),
-                        Text(
-                          'websitename.com',
-                          style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              color: Colors.indigo,
-                              decoration: TextDecoration.underline),
+                        GestureDetector(
+                          onTap: () => launchWebsite(
+                              "https://www.globalsearchnetworks.com"),
+                          child: Text(
+                            'www.globalsearchnetworks.com',
+                            style: TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.indigo,
+                                decoration: TextDecoration.underline),
+                          ),
                         ),
                       ],
                     ),
@@ -179,11 +253,27 @@ class _AboutUsState extends State<AboutUs> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        Image.asset("images/fb.png"),
-                        Image.asset("images/utube.png"),
-                        Image.asset("images/linkedin.png"),
-                        Image.asset("images/wmail.png"),
-                        Image.asset("images/insta.png"),
+                        InkWell(
+                            onTap: () => launchWebsite(
+                                "https://www.facebook.com/Global-Search-Lost-Found-100203234996153/?ref=aymt_homepage_panel&eid=ARDc52O0Z1qP4A_YlySlNnQ7_rv6K4k2VjUB_KgDPVn4rhL8vSg_jBTvKj-h3vwzKP78tBXQvt8dnhAq"),
+                            child: Image.asset("images/fb.png")),
+                        InkWell(
+                            onTap: () =>
+                                launchWebsite("https://youtu.be/QncidaRh4Sk"),
+                            child: Image.asset("images/utube.png")),
+                        InkWell(
+                            onTap: () => launchWebsite(
+                                "https://www.linkedin.com/in/global-search-b237871a8/"),
+                            child: Image.asset("images/linkedin.png")),
+                        InkWell(
+                          child: Image.asset("images/insta.png"),
+                          onTap: () => launchWebsite(
+                              "https://www.instagram.com/globalsearchlost/?hl=en"),
+                        ),
+                        InkWell(
+                            onTap: () =>
+                                launchWebsite("https://twitter.com/LostGlobal"),
+                            child: Image.asset("images/twitter.png")),
                         //TODO: delete unneccessary pngs and change image icons to SVG coz they are working
                       ],
                     ),
@@ -235,5 +325,13 @@ class _AboutUsState extends State<AboutUs> {
         ),
       ),
     );
+  }
+
+  launchWebsite(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
