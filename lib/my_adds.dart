@@ -128,6 +128,7 @@ class _MyAddScreenState extends State<MyAddScreen> {
               img: doc.data['uri'][0],
               reward: doc.data['reward'],
               docId: doc.documentID,
+              phone: doc.data['phone'],
             ),
           );
           dataList.add(
@@ -141,6 +142,8 @@ class _MyAddScreenState extends State<MyAddScreen> {
                 doc.data['uid'],
                 doc.data['phone'],
                 doc.data['tags'],
+                doc.data['subcategory'],
+                doc.data['additionalinfo']
                 ),
           );
         }
@@ -306,7 +309,7 @@ class _MyAddScreenState extends State<MyAddScreen> {
                   GestureDetector(
                     onTap: () {
                       Share.share(
-                          'Lost $widget.name at $widget.location, ImageUrl: $widget.img, if Found call: 8837342435');
+                          'Lost  at ${list[val].location}, ImageUrl: ${list[val].img}, if Found call: ${list[val].phone}');
                     },
                     child: Container(
 //                      decoration: BoxDecoration(
@@ -336,43 +339,43 @@ class _MyAddScreenState extends State<MyAddScreen> {
                       ),
                     ),
                   ),
-//                SizedBox(
-//                  height: 5,
-//                ),
-//                GestureDetector(
-//                  onTap: () {
-//                    deleteData(list[val].docId);
-//                  },
-//                  child: Container(
-//                    decoration: BoxDecoration(
-//                      color: Colors.grey.withAlpha(100),
-//                      borderRadius: BorderRadius.all(Radius.circular(8)),
-//                    ),
-//                    child: Padding(
-//                      padding: const EdgeInsets.all(2.0),
-//                      child: Row(
-//                        mainAxisAlignment: MainAxisAlignment.center,
-//                        children: <Widget>[
-//                          Icon(
-//                            Icons.delete,
-//                            color: Colors.black,
-//                          ),
-//                          Padding(
-//                            padding: const EdgeInsets.only(left: 6),
-//                            child: Text(
-//                              'Delete',
-//                              style:
-//                                  TextStyle(color: Colors.black, fontSize: 16),
-//                            ),
-//                          )
-//                        ],
-//                      ),
-//                    ),
-//                  ),
-//                ),
-//                SizedBox(
-//                  height: 5,
-//                ),
+                SizedBox(
+                  height: 5,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    deleteData(list[val].docId);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withAlpha(100),
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.delete,
+                            color: Colors.black,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 6),
+                            child: Text(
+                              'Delete',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 16),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
                 ],
               ),
             );
@@ -394,7 +397,7 @@ class _MyAddScreenState extends State<MyAddScreen> {
 }
 
 class MyAds {
-  final img, name, location, status, reward, docId;
+  final img, name, location, status, reward, docId,phone;
 
   MyAds(
       {this.img,
@@ -402,5 +405,7 @@ class MyAds {
       this.location,
       this.status,
       this.reward,
-      this.docId});
+      this.docId,
+      this.phone,
+      });
 }

@@ -6,7 +6,7 @@ import 'package:search_india/add_fin.dart';
 
 class MakeAdd extends StatefulWidget {
 
-  final Map<String,String> map;
+  final Map<String,dynamic> map;
   MakeAdd({this.map});
 
   @override
@@ -69,186 +69,188 @@ class _MakeAddState extends State<MakeAdd> {
       child: Scaffold(
         appBar: AppBar(title: Text('Create Report'),
           backgroundColor: Colors.white,),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            SizedBox(height: 20,),
-            Center(
-              child: Text(
-                'Requestor Information',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black
-                ),
-              ),
-            ),
-            SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.only(left:10.0),
-              child: RichText(
-                text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,),
-                    children: <TextSpan>[
-                      TextSpan(text: "Name "),
-                      TextSpan(text: "*",style: TextStyle(color: Colors.red))
-                    ]
-                ),
-              )
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left:10.0),
-              child: Text(
-                name !=null ? name : 'Loading',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black
-                ),
-              ),
-            ),
-            Divider(
-              thickness: 1,
-              color: Colors.black.withAlpha(140),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left:10.0),
-              child: RichText(
-                text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,),
-                    children: <TextSpan>[
-                      TextSpan(text: "Phone "),
-                      TextSpan(text: "*",style: TextStyle(color: Colors.red))
-                    ]
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left:10.0),
-              child: Text(
-                mobile !=null ? mobile : 'Loading',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black
-                ),
-              ),
-            ),
-            Divider(
-              thickness: 1,
-              color: Colors.black.withAlpha(140),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left:10.0),
-              child: RichText(
-                text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,),
-                    children: <TextSpan>[
-                      TextSpan(text: "City "),
-                      TextSpan(text: "*",style: TextStyle(color: Colors.red))
-                    ]
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left:10.0),
-              child: Text(
-                city !=null ? city : 'Loading',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black
-                ),
-              ),
-            ),
-            Divider(
-              thickness: 1,
-              color: Colors.black.withAlpha(140),
-            ),
-            Row(
-              children: <Widget>[
-                Checkbox(
-                  checkColor: Colors.white,
-                  activeColor: Colors.black,
-                  value: val,
-                  onChanged: (vary){
-                    setState(() {
-                      val = vary;
-                    });
-                  },
-                ),
-                Text(
-                  'Hide Phone number ?',
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              SizedBox(height: 20,),
+              Center(
+                child: Text(
+                  'Requestor Information',
+                  textAlign: TextAlign.left,
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-            Divider(
-              thickness: 1,
-              color: Colors.black.withAlpha(140),
-            ),
-            SizedBox(height: 30,),
-            GestureDetector(
-              onTap: (){
-                Map<String,String> map = widget.map;
-                var x = {
-                  'phoneval': val.toString(),
-                  'mobile':mobile,
-                };
-                map.addAll(x);
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>FinalAdd(map:map)));
-              },
-              child: Center(
-                child: Container(
-                  width: 200,
-                  height: 40,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      fontSize: 28,
+                      fontWeight: FontWeight.w500,
                       color: Colors.black
                   ),
-                  child: Center(
-                    child: Text(
-                      'Next',
-                      style: TextStyle(color: Colors.white),
+                ),
+              ),
+              SizedBox(height: 20,),
+              Padding(
+                padding: const EdgeInsets.only(left:10.0),
+                child: RichText(
+                  text: TextSpan(
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,),
+                      children: <TextSpan>[
+                        TextSpan(text: "Name "),
+                        TextSpan(text: "*",style: TextStyle(color: Colors.red))
+                      ]
+                  ),
+                )
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left:10.0),
+                child: Text(
+                  name !=null ? name : 'Loading',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black
+                  ),
+                ),
+              ),
+              Divider(
+                thickness: 1,
+                color: Colors.black.withAlpha(140),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left:10.0),
+                child: RichText(
+                  text: TextSpan(
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,),
+                      children: <TextSpan>[
+                        TextSpan(text: "Phone "),
+                        TextSpan(text: "*",style: TextStyle(color: Colors.red))
+                      ]
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left:10.0),
+                child: Text(
+                  mobile !=null ? mobile : 'Loading',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black
+                  ),
+                ),
+              ),
+              Divider(
+                thickness: 1,
+                color: Colors.black.withAlpha(140),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left:10.0),
+                child: RichText(
+                  text: TextSpan(
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,),
+                      children: <TextSpan>[
+                        TextSpan(text: "City "),
+                        TextSpan(text: "*",style: TextStyle(color: Colors.red))
+                      ]
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left:10.0),
+                child: Text(
+                  city !=null ? city : 'Loading',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black
+                  ),
+                ),
+              ),
+              Divider(
+                thickness: 1,
+                color: Colors.black.withAlpha(140),
+              ),
+              Row(
+                children: <Widget>[
+                  Checkbox(
+                    checkColor: Colors.white,
+                    activeColor: Colors.black,
+                    value: val,
+                    onChanged: (vary){
+                      setState(() {
+                        val = vary;
+                      });
+                    },
+                  ),
+                  Text(
+                    'Hide Phone number ?',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+              Divider(
+                thickness: 1,
+                color: Colors.black.withAlpha(140),
+              ),
+              SizedBox(height: 30,),
+              GestureDetector(
+                onTap: (){
+                  Map<String,dynamic> map = widget.map;
+                  var x = {
+                    'phoneval': val.toString(),
+                    'mobile':mobile,
+                  };
+                  map.addAll(x);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>FinalAdd(map:map)));
+                },
+                child: Center(
+                  child: Container(
+                    width: 200,
+                    height: 40,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        color: Colors.black
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Next',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height:20),
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Center(
-                child: Container(
-                  width: 200,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
-                    border: Border.all(width: 2, color: Colors.black),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Back',
-                      style: TextStyle(color: Colors.black),
+              SizedBox(height:20),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Center(
+                  child: Container(
+                    width: 200,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                      border: Border.all(width: 2, color: Colors.black),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Back',
+                        style: TextStyle(color: Colors.black),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -9,7 +9,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class FinalAdd extends StatefulWidget {
-  final Map<String, String> map;
+  final Map<String, dynamic> map;
 
   FinalAdd({this.map});
 
@@ -106,6 +106,7 @@ class _FinalAddState extends State<FinalAdd> {
 
     try {
       resultList = await MultiImagePicker.pickImages(
+
         maxImages: 5,
         enableCamera: true,
         selectedAssets: images,
@@ -266,6 +267,7 @@ class _FinalAddState extends State<FinalAdd> {
                       'timestamp':
                           DateTime.now().millisecondsSinceEpoch.toString(),
                         'tags': widget.map['tags'],
+                        'additionalinfo':widget.map['additionalinfo'],
                     });
                     setState(() {
                       loading = true;

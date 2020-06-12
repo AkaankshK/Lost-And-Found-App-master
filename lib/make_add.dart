@@ -10,10 +10,10 @@ import 'package:search_india/register_page.dart';
 import 'package:search_india/selectLocation/Location.dart';
 import 'package:search_india/selectLocation/selectDistrict.dart';
 import 'package:rxdart/rxdart.dart';
+
 String apiKey = "AIzaSyD8IRf3qxELm874q-zPVKgo79xs0PJIwro";
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: apiKey);
-final cityController = new TextEditingController();
-String cityname;
+
 
 class CreateAdd extends StatefulWidget {
   @override
@@ -26,6 +26,8 @@ class _CreateAddState extends State<CreateAdd> {
   final homeScaffoldKey = GlobalKey<ScaffoldState>();
   //GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
   final GlobalKey<TagsState> _tagStateKey = GlobalKey<TagsState>();
+  final cityController = new TextEditingController();
+  String cityname="";
   List _tagItems = ["lost", "found"];
   String currentText = "";
   int a = 0;
@@ -44,8 +46,8 @@ class _CreateAddState extends State<CreateAdd> {
   bool negotiable = false;
   String reward = "0";
   String tags;
-
-  String subcategory = null;
+  String title;
+  String subcategory;
   String desc;
   String selectedCurrency = null;
   String getCity;
@@ -369,9 +371,7 @@ class _CreateAddState extends State<CreateAdd> {
 //            IconButton(icon: Icon(Icons.arrow_drop_down),onPressed: ,),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  child: category(),
-                ),
+                child: Container(child: category()),
               ),
               (selectedCurrency == 'Mobile')
                   ? Padding(
@@ -550,6 +550,10 @@ class _CreateAddState extends State<CreateAdd> {
                         ]),
                   )),
               TextFormField(
+                onChanged: (val){
+                  title=val;
+                  print(title);
+                },
                 validator: (value) {
                   if (value.isEmpty) {
                     return "Please Enter Title";
@@ -590,6 +594,7 @@ class _CreateAddState extends State<CreateAdd> {
                         ]),
                   )),
               TextFormField(
+                maxLines: 2,
                 validator: (value) {
                   if (value.isEmpty) {
                     return "Please Enter Description";
@@ -1255,15 +1260,16 @@ class _CreateAddState extends State<CreateAdd> {
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Tags(
                   key: _tagStateKey,
-                  textField: TagsTextField(
-                      width: MediaQuery.of(context).size.width,
-                      hintText: "Enter a New Tag",
-                      textStyle: TextStyle(fontSize: 18),
-                      onSubmitted: (String str) {
-                        setState(() {
-                          _tagItems.add(str);
-                        });
-                      }),
+//                textField: TagsTextField(
+//                    enabled: false,
+//                    width: MediaQuery.of(context).size.width,
+//                    hintText: "Enter a New Tag",
+//                    textStyle: TextStyle(fontSize: 18),
+//                    onSubmitted: (String str) {
+//                      setState(() {
+//                        _tagItems.add(str);
+//                      });
+//                    }),
                   itemCount: _tagItems.length,
                   itemBuilder: (int index) {
                     final item = _tagItems[index];
@@ -1271,7 +1277,7 @@ class _CreateAddState extends State<CreateAdd> {
                       key: Key(index.toString()),
                       index: index,
                       title: item,
-
+                      pressEnabled: false,
                       textStyle: TextStyle(fontSize: 20),
                       combine: ItemTagsCombine.withTextBefore,
 
@@ -1288,6 +1294,18 @@ class _CreateAddState extends State<CreateAdd> {
                   },
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  decoration: InputDecoration(hintText: "Enter Tags"),
+                  onSubmitted: (val) {
+                    setState(() {
+                      _tagItems.add(val);
+                    });
+                  },
+                ),
+              ),
+
               Padding(
                   padding: const EdgeInsets.only(left: 8.0, top: 8.0),
                   child: RichText(
@@ -1347,7 +1365,7 @@ class _CreateAddState extends State<CreateAdd> {
 //                ),
 //              ),
               StatefulBuilder(
-                builder: (context,setState){
+                builder: (context, setState) {
                   return TextField(
                     controller: cityController,
                     decoration: InputDecoration(
@@ -1366,13 +1384,13 @@ class _CreateAddState extends State<CreateAdd> {
                         apiKey: apiKey,
                         language: "en",
                       );
-                      if(p!=null){
+                      if (p != null) {
                         PlacesDetailsResponse detail =
-                        await _places.getDetailsByPlaceId(p.placeId);
+                            await _places.getDetailsByPlaceId(p.placeId);
                         lat = detail.result.geometry.location.lat;
                         lng = detail.result.geometry.location.lng;
                         List<Placemark> p1 =
-                        await geoLocator.placemarkFromCoordinates(lat, lng);
+                            await geoLocator.placemarkFromCoordinates(lat, lng);
                         Placemark place = p1[0];
                         setState(() {
                           cityname = place.locality;
@@ -1414,6 +1432,7 @@ class _CreateAddState extends State<CreateAdd> {
               GestureDetector(
                 onTap: () {
                   if (_formKey.currentState.validate()) {
+                    getAdditinalInfo();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -1426,6 +1445,7 @@ class _CreateAddState extends State<CreateAdd> {
                             'city': cityname,
                             'desc': desc,
                             'tags': getTags(),
+                            'additionalinfo':getAdditinalInfo(),
                           },
                         ),
                       ),
@@ -1466,10 +1486,45 @@ class _CreateAddState extends State<CreateAdd> {
     print(tagslist);
     return tagslist;
   }
+
   void onError(PlacesAutocompleteResponse response) {
     homeScaffoldKey.currentState.showSnackBar(
       SnackBar(content: Text(response.errorMessage)),
     );
+  }
+
+  getAdditinalInfo() {
+    var additionalInfo={};
+
+    if(title!=null){
+      additionalInfo['title']=title;
+    }
+    if(lastloc!=null){
+      additionalInfo['last_location']=lastloc;
+    }
+    if(brand!=null){
+      additionalInfo['brand']=brand;
+    }
+    if(color!=null){
+      additionalInfo['color']=color;
+    }
+    if(serialno!=null){
+      additionalInfo['serialno']=serialno;
+    }
+    if(name!=null){
+      additionalInfo['name']=name;
+    }
+    if(age!=null){
+      additionalInfo['age']=age;
+    }
+    if(imei!=null){
+      additionalInfo['imei']=imei;
+    }
+    additionalInfo['date']=DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day);
+    additionalInfo['negotiable']=negotiable;
+    print(additionalInfo);
+    return additionalInfo;
+
   }
 //  @override
 //  void dispose() {

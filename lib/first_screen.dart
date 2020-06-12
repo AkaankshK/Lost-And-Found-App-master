@@ -26,8 +26,9 @@ class _FirstScreenState extends State<FirstScreen> {
   final _auth = FirebaseAuth.instance;
   FirebaseUser loggedinuser;
   bool loading = false;
+  bool heroLoading=true;
   List<CardView> list = <CardView>[];
-
+  List<heroesOfTheMonth> heroList=List();
   Future getCurrentUser() async {
     try {
       loading = true;
@@ -68,6 +69,7 @@ class _FirstScreenState extends State<FirstScreen> {
           .collection('adds')
           .orderBy('timestamp', descending: true)
           .getDocuments();
+      print("dataloaded");
       if (widget.dir) {
         for (var doc in data.documents) {
           if (doc.data['uid'] == uid1) {
@@ -91,9 +93,12 @@ class _FirstScreenState extends State<FirstScreen> {
                   doc.data['uid'],
                   doc.data['phone'],
                   doc.data['tags'],
+                  doc.data['subcategory'],
+                  doc.data['additionalinfo']
               ),
             );
           }
+          print("dataloaded1");
           setState(() {
             loading = false;
           });
@@ -107,6 +112,7 @@ class _FirstScreenState extends State<FirstScreen> {
               status: doc.data['posttype'],
               img: doc.data['uri'][0],
               reward: doc.data['reward'],
+              phone: doc.data['phone'],
             ),
           );
           dataList.add(
@@ -120,6 +126,8 @@ class _FirstScreenState extends State<FirstScreen> {
                 doc.data['uid'],
                 doc.data['phone'],
                 doc.data['tags'],
+                doc.data['subcategory'],
+                doc.data['additionalinfo']
             ),
           );
           setState(() {
@@ -127,9 +135,12 @@ class _FirstScreenState extends State<FirstScreen> {
           });
         }
       }
+//
+
     } catch (e) {
       print(e);
     }
+
   }
 
   @override
@@ -137,6 +148,7 @@ class _FirstScreenState extends State<FirstScreen> {
     super.initState();
     getCurrentUser();
     loadData();
+    heroData();
   }
 
   @override
@@ -192,7 +204,11 @@ class _FirstScreenState extends State<FirstScreen> {
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(16),
                 itemBuilder: (context, i) {
-                  return Winner();
+                  if(heroLoading){
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  var data=heroList[i];
+                  return Winner(name: data.name,desc: data.desc,img: data.img);
                 }),
             SizedBox(height: 20,),
             Text(
@@ -246,10 +262,33 @@ class _FirstScreenState extends State<FirstScreen> {
       ),
     );
   }
+
+  void heroData() async{
+    var heroesOfMonth=await
+          Firestore.instance.collection('heroesOfMonth')
+          .getDocuments();
+      for(var doc in heroesOfMonth.documents){
+        heroList.add(heroesOfTheMonth(
+         name: doc.data['name'],
+          desc: doc.data['desc'],
+          img: doc.data['img']
+        ));
+      }
+      setState(() {
+        heroLoading=false;
+      });
+  }
+}
+
+class heroesOfTheMonth{
+  String  name;
+  String desc;
+  String img;
+  heroesOfTheMonth({this.name,this.desc,this.img});
 }
 
 class CardView extends StatelessWidget {
-  final img, name, location, status, reward, docId, desc;
+  final img, name, location, status, reward, docId, desc,phone;
 
   CardView(
       {this.img,
@@ -258,7 +297,9 @@ class CardView extends StatelessWidget {
       this.status,
       this.reward,
       this.docId,
-      this.desc});
+      this.desc,
+        this.phone,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -358,7 +399,7 @@ class CardView extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Share.share(
-                    'Lost $name at $location, ImageUrl: $img, if Found call: 8837342435');
+                    'Lost $name at $location, ImageUrl: $img, if Found call: $phone');
               },
               child: Container(
                 decoration: BoxDecoration(

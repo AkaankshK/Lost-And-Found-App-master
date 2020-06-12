@@ -71,7 +71,8 @@ List<DataModel>itemList= List();
                   doc.data['uid'],
                   doc.data['phone'],
                   doc.data['tags'],
-
+                  doc.data['subcategory'],
+                  doc.data['additionalinfo']
               ),
             );
           }

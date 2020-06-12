@@ -89,6 +89,8 @@ class _ViewAllState extends State<ViewAll> {
               doc.data['uid'],
               doc.data['phone'],
               doc.data['tags'],
+              doc.data['subcategory'],
+              doc.data['additionalinfo']
           ),
         );
 
