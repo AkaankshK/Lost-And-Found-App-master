@@ -94,7 +94,8 @@ class _FirstScreenState extends State<FirstScreen> {
                   doc.data['phone'],
                   doc.data['tags'],
                   doc.data['subcategory'],
-                  doc.data['additionalinfo']
+                  doc.data['additionalinfo'],
+                  doc.data['pdfLink'],
               ),
             );
           }
@@ -113,6 +114,8 @@ class _FirstScreenState extends State<FirstScreen> {
               img: doc.data['uri'][0],
               reward: doc.data['reward'],
               phone: doc.data['phone'],
+              additionalinfo: doc.data['additionalinfo'],
+              pdfLink: doc.data['pdfLink'],
             ),
           );
           dataList.add(
@@ -127,7 +130,8 @@ class _FirstScreenState extends State<FirstScreen> {
                 doc.data['phone'],
                 doc.data['tags'],
                 doc.data['subcategory'],
-                doc.data['additionalinfo']
+                doc.data['additionalinfo'],
+                doc.data['pdfLink'],
             ),
           );
           setState(() {
@@ -288,7 +292,7 @@ class heroesOfTheMonth{
 }
 
 class CardView extends StatelessWidget {
-  final img, name, location, status, reward, docId, desc,phone;
+  final img, name, location, status, reward, docId, desc,phone,additionalinfo,pdfLink;
 
   CardView(
       {this.img,
@@ -299,6 +303,8 @@ class CardView extends StatelessWidget {
       this.docId,
       this.desc,
         this.phone,
+        this.additionalinfo,
+        this.pdfLink
       });
 
   @override
@@ -389,17 +395,20 @@ class CardView extends StatelessWidget {
             SizedBox(
               height: 4,
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 6, left: 6),
-              child: Text(
-                'Time',
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Icon(Icons.access_time),
+                ),
+                Text(" "+DateTime.parse(additionalinfo['date']).difference(DateTime.now()).inDays.toString()),
+                Text(" Days Ago"),
+              ],
             ),
             GestureDetector(
               onTap: () {
                 Share.share(
-                    'Lost $name at $location, ImageUrl: $img, if Found call: $phone');
+                    'Lost/Found $name at $location, pdfURL: $pdfLink, if Lost/Found call: $phone');
               },
               child: Container(
                 decoration: BoxDecoration(

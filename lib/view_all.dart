@@ -76,6 +76,9 @@ class _ViewAllState extends State<ViewAll> {
             img: doc.data['uri'][0],
             reward: doc.data['reward'],
             desc: doc.data['desc'],
+            additionalinfo: doc.data['additionalinfo'],
+            phone: doc.data['phone'],
+            pdfLink: doc.data['pdfLink'],
           ),
         );
         dataList.add(
@@ -90,7 +93,8 @@ class _ViewAllState extends State<ViewAll> {
               doc.data['phone'],
               doc.data['tags'],
               doc.data['subcategory'],
-              doc.data['additionalinfo']
+              doc.data['additionalinfo'],
+              doc.data['pdfLink'],
           ),
         );
 
@@ -285,17 +289,20 @@ class _ViewAllState extends State<ViewAll> {
                         SizedBox(
                           height: 4,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 6, left: 6),
-                          child: Text(
-                            'Time',
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                          ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5.0),
+                              child: Icon(Icons.access_time),
+                            ),
+                            Text(" "+DateTime.parse(selectedItems[val].additionalinfo['date']).difference(DateTime.now()).inDays.toString()),
+                            Text(" Days Ago"),
+                          ],
                         ),
                         GestureDetector(
                           onTap: () {
                             Share.share(
-                                'Lost ${selectedItems[val].name} at ${selectedItems[val].location}, ImageUrl: ${selectedItems[val].images[0]}, if Found call: 8837342435');
+                                'Lost/Found ${selectedItems[val].name} at ${selectedItems[val].location}, pdfURL: ${selectedItems[val].pdfLink}, if Found call: ${selectedItems[val].phone}');
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -347,7 +354,7 @@ class _ViewAllState extends State<ViewAll> {
 }
 
 class CardView extends StatelessWidget {
-  final img, name, location, status, reward, desc;
+  final img, name, location, status, reward, desc,additionalinfo,phone,pdfLink;
 
   CardView(
       {this.img,
@@ -355,7 +362,11 @@ class CardView extends StatelessWidget {
       this.location,
       this.status,
       this.reward,
-      this.desc});
+      this.desc,
+      this.additionalinfo,
+      this.phone,
+        this.pdfLink,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -444,17 +455,20 @@ class CardView extends StatelessWidget {
             SizedBox(
               height: 4,
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 6, left: 6),
-              child: Text(
-                'Time',
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Icon(Icons.access_time),
+                ),
+                Text(" "+DateTime.parse(additionalinfo['date']).difference(DateTime.now()).inDays.toString()),
+                Text(" Days Ago"),
+              ],
             ),
             GestureDetector(
               onTap: () {
                 Share.share(
-                    'Lost $name at $location, ImageUrl: $img, if Found call: 8837342435');
+                    'Lost $name at $location, pdfURL: $pdfLink, if Found call: $phone');
               },
               child: Container(
                 decoration: BoxDecoration(

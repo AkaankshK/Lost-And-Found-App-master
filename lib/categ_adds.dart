@@ -72,7 +72,8 @@ List<DataModel>itemList= List();
                   doc.data['phone'],
                   doc.data['tags'],
                   doc.data['subcategory'],
-                  doc.data['additionalinfo']
+                  doc.data['additionalinfo'],
+                  doc.data['pdfLink']
               ),
             );
           }

@@ -209,7 +209,7 @@ class _ItemDetailState extends State<ItemDetail> {
                               ),
                               Text(" "+DateTime.parse(additionalInfo['date']).difference(DateTime.now()).inDays.toString()),
                               Text(" Days Ago - "),
-                              Text(widget.data.subcategory),
+                              (widget.data.subcategory!=null)?Text(widget.data.subcategory):Container(),
                             ],
                           ),
                           SizedBox(height: 10,),
@@ -240,7 +240,7 @@ class _ItemDetailState extends State<ItemDetail> {
                                     child: Row(
                                       children: [
                                         Text("\u20b9"+widget.data.reward,style: TextStyle(fontSize: addInfoFont),),
-                                        (additionalInfo['negotiable']!=true)?Container(padding:EdgeInsets.all(2),color:Colors.yellow,child: Text("Negotiable")):Container(),
+                                        (additionalInfo['negotiable']==true)?Container(padding:EdgeInsets.all(2),color:Colors.yellow,child: Text("Negotiable")):Container(),
                                       ],
                                     ),
                                   ),

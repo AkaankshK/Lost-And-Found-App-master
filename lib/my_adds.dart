@@ -129,6 +129,8 @@ class _MyAddScreenState extends State<MyAddScreen> {
               reward: doc.data['reward'],
               docId: doc.documentID,
               phone: doc.data['phone'],
+              additionalinfo: doc.data['additionalinfo'],
+              pdfLink: doc.data['pdfLink'],
             ),
           );
           dataList.add(
@@ -143,7 +145,8 @@ class _MyAddScreenState extends State<MyAddScreen> {
                 doc.data['phone'],
                 doc.data['tags'],
                 doc.data['subcategory'],
-                doc.data['additionalinfo']
+                doc.data['additionalinfo'],
+                doc.data['pdfLink'],
                 ),
           );
         }
@@ -214,12 +217,14 @@ class _MyAddScreenState extends State<MyAddScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(
-                            list[val].name,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500),
+                          Flexible(
+                            child: Text(
+                              list[val].name,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500),
+                            ),
                           ),
 //                      Column(
 //                        mainAxisAlignment: MainAxisAlignment.start,
@@ -298,18 +303,21 @@ class _MyAddScreenState extends State<MyAddScreen> {
                   ),
                   Expanded(
                     flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 6, left: 6),
-                      child: Text(
-                        'Time',
-                        style: TextStyle(color: Colors.black, fontSize: 16),
-                      ),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5.0),
+                          child: Icon(Icons.access_time),
+                        ),
+                        Text(" "+DateTime.parse(list[val].additionalinfo['date']).difference(DateTime.now()).inDays.toString()),
+                        Text(" Days Ago"),
+                      ],
                     ),
                   ),
                   GestureDetector(
                     onTap: () {
                       Share.share(
-                          'Lost  at ${list[val].location}, ImageUrl: ${list[val].img}, if Found call: ${list[val].phone}');
+                          'Lost/Found  at ${list[val].location}, pdfLink: ${list[val].pdfLink}, if Lost/Found call: ${list[val].phone}');
                     },
                     child: Container(
 //                      decoration: BoxDecoration(
@@ -397,7 +405,7 @@ class _MyAddScreenState extends State<MyAddScreen> {
 }
 
 class MyAds {
-  final img, name, location, status, reward, docId,phone;
+  final img, name, location, status, reward, docId,phone,additionalinfo,pdfLink;
 
   MyAds(
       {this.img,
@@ -407,5 +415,7 @@ class MyAds {
       this.reward,
       this.docId,
       this.phone,
+        this.additionalinfo,
+        this.pdfLink
       });
 }

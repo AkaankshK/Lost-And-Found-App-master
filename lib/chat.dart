@@ -23,7 +23,7 @@ class _ChatScreenState extends State<Chat> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
   String messageText;
-
+  bool loading=true;
   @override
   void initState() {
     super.initState();
@@ -33,6 +33,7 @@ class _ChatScreenState extends State<Chat> {
   }
 
   void getCurrentUser() async{
+
     try {
       var user = await _auth.currentUser();
       if (user != null) {
@@ -40,6 +41,9 @@ class _ChatScreenState extends State<Chat> {
           loggedInUser = user;
         });
       }
+      setState(() {
+        loading=false;
+      });
     }catch(e){
       print(e);
     }
@@ -61,7 +65,7 @@ class _ChatScreenState extends State<Chat> {
         backgroundColor: Colors.white.withAlpha(220),
       ),
       body: SafeArea(
-        child: Column(
+        child: (loading)?Center(child: CircularProgressIndicator()):Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[

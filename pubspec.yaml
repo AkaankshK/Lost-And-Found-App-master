@@ -45,6 +45,8 @@ dependencies:
   autocomplete_textfield:
   search_map_place:
   google_maps_webservice:
+  pdf:
+  path_provider:
 
 
 

@@ -1367,6 +1367,11 @@ class _CreateAddState extends State<CreateAdd> {
               StatefulBuilder(
                 builder: (context, setState) {
                   return TextField(
+                    onChanged: (val){
+                      setState(() {
+                        cityname=val;
+                      });
+                    },
                     controller: cityController,
                     decoration: InputDecoration(
                       hintText: cityname == null ? 'City' : cityname,
@@ -1520,7 +1525,8 @@ class _CreateAddState extends State<CreateAdd> {
     if(imei!=null){
       additionalInfo['imei']=imei;
     }
-    additionalInfo['date']=DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day);
+    print(DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day).toString());
+    additionalInfo['date']=DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day).toString();
     additionalInfo['negotiable']=negotiable;
     print(additionalInfo);
     return additionalInfo;
