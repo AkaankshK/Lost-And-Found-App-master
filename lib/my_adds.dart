@@ -130,7 +130,7 @@ class _MyAddScreenState extends State<MyAddScreen> {
               docId: doc.documentID,
               phone: doc.data['phone'],
               additionalinfo: doc.data['additionalinfo'],
-              pdfLink: doc.data['pdfLink'],
+              adID: doc.data['adID'],
             ),
           );
           dataList.add(
@@ -146,7 +146,7 @@ class _MyAddScreenState extends State<MyAddScreen> {
                 doc.data['tags'],
                 doc.data['subcategory'],
                 doc.data['additionalinfo'],
-                doc.data['pdfLink'],
+                doc.data['adID']
                 ),
           );
         }
@@ -309,7 +309,7 @@ class _MyAddScreenState extends State<MyAddScreen> {
                           padding: const EdgeInsets.only(left: 5.0),
                           child: Icon(Icons.access_time),
                         ),
-                        Text(" "+DateTime.parse(list[val].additionalinfo['date']).difference(DateTime.now()).inDays.toString()),
+                        Text(" "+DateTime.parse(list[val].additionalinfo['date']).difference(DateTime.now()).inDays.abs().toString()),
                         Text(" Days Ago"),
                       ],
                     ),
@@ -317,7 +317,7 @@ class _MyAddScreenState extends State<MyAddScreen> {
                   GestureDetector(
                     onTap: () {
                       Share.share(
-                          'Lost/Found  at ${list[val].location}, pdfLink: ${list[val].pdfLink}, if Lost/Found call: ${list[val].phone}');
+                          'Lost/Found  at ${list[val].location}, adURL: https://cwservices.co.in/globalsearch/item.php?id=${list[val].adID}, if Lost/Found call: ${list[val].phone}');
                     },
                     child: Container(
 //                      decoration: BoxDecoration(
@@ -405,7 +405,7 @@ class _MyAddScreenState extends State<MyAddScreen> {
 }
 
 class MyAds {
-  final img, name, location, status, reward, docId,phone,additionalinfo,pdfLink;
+  final img, name, location, status, reward, docId,phone,additionalinfo,adID;
 
   MyAds(
       {this.img,
@@ -416,6 +416,6 @@ class MyAds {
       this.docId,
       this.phone,
         this.additionalinfo,
-        this.pdfLink
+        this.adID
       });
 }

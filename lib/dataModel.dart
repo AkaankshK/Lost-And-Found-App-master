@@ -12,10 +12,10 @@ class DataModel extends StatelessWidget {
   final String tags;
   final String subcategory;
   final Map<String,dynamic> additionalinfo;
-  final String pdfLink;
+  final String adID;
 
 
-  DataModel(this.name, this.location, this.status, this.images, this.reward, this.desc, this.uid, this.phone,this.tags,this.subcategory,this.additionalinfo,this.pdfLink);
+  DataModel(this.name, this.location, this.status, this.images, this.reward, this.desc, this.uid, this.phone,this.tags,this.subcategory,this.additionalinfo,this.adID);
 
   @override
   Widget build(BuildContext context) {

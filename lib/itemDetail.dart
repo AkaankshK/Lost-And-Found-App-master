@@ -57,7 +57,7 @@ class _ItemDetailState extends State<ItemDetail> {
             child: Icon(Icons.share,color: Colors.white,),
             onPressed: (){
               Share.share(
-                  'Lost ${widget.data.name} at ${widget.data.location}, ImageUrl: ${widget.data.images[0]}, if Found call: ${widget.data.phone}');
+                  'Lost ${widget.data.name} at ${widget.data.location}, adUrl: https://cwservices.co.in/globalsearch/item.php?id=${widget.data.additionalinfo['adID']}, if Found call: ${widget.data.phone}');
             },
           )
         ],

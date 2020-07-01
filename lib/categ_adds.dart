@@ -73,7 +73,7 @@ List<DataModel>itemList= List();
                   doc.data['tags'],
                   doc.data['subcategory'],
                   doc.data['additionalinfo'],
-                  doc.data['pdfLink']
+                  doc.data['adID']
               ),
             );
           }

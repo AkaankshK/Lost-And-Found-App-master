@@ -1528,6 +1528,7 @@ class _CreateAddState extends State<CreateAdd> {
     print(DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day).toString());
     additionalInfo['date']=DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day).toString();
     additionalInfo['negotiable']=negotiable;
+    print(additionalInfo["date"]);
     print(additionalInfo);
     return additionalInfo;
 

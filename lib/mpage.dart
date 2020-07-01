@@ -151,7 +151,7 @@ class _MainPage2State extends State<MainPage2>
         headerSliverBuilder: (context, value) {
           return <Widget>[
             SliverAppBar(
-              expandedHeight: 560,
+              expandedHeight: 530,
               flexibleSpace: FlexibleSpaceBar(
                 //TODO: add animations if time persists
                 background: Container(
@@ -160,8 +160,6 @@ class _MainPage2State extends State<MainPage2>
                     children: <Widget>[
                       Wid1(),
                       Wid2(),
-
-//                      Wid2(),
                       ListTile(
                         title: Text(
                           'new',
@@ -263,16 +261,12 @@ class _Wid1State extends State<Wid1> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage("assets/maskGroup3.png"),
-              fit: BoxFit.cover
+              fit: BoxFit.cover,
             )
           ),
-          height: 330,
-         child: Stack(
-           children: [
-             Center(
-               child: Image.asset("assets/logo search.png"),
-             )
-           ],
+          height: MediaQuery.of(context).size.height/3,
+         child: Center(
+           child: Image.asset("assets/logo search.png",),
          ),
 
         ),
@@ -297,8 +291,6 @@ class _Wid2State extends State<Wid2> {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             SizedBox(
               width: 10,
@@ -657,7 +649,7 @@ class _Wid3State extends State<Wid3> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 700,
+      height: MediaQuery.of(context).size.height/2,
       child: DefaultTabController(
         length: 3,
         child: Scaffold(

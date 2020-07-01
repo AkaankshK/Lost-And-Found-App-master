@@ -78,7 +78,7 @@ class _ViewAllState extends State<ViewAll> {
             desc: doc.data['desc'],
             additionalinfo: doc.data['additionalinfo'],
             phone: doc.data['phone'],
-            pdfLink: doc.data['pdfLink'],
+            adID: doc.data['adID'],
           ),
         );
         dataList.add(
@@ -94,7 +94,7 @@ class _ViewAllState extends State<ViewAll> {
               doc.data['tags'],
               doc.data['subcategory'],
               doc.data['additionalinfo'],
-              doc.data['pdfLink'],
+              doc.data['adID']
           ),
         );
 
@@ -295,14 +295,14 @@ class _ViewAllState extends State<ViewAll> {
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Icon(Icons.access_time),
                             ),
-                            Text(" "+DateTime.parse(selectedItems[val].additionalinfo['date']).difference(DateTime.now()).inDays.toString()),
+                            Text(" "+DateTime.parse(selectedItems[val].additionalinfo['date']).difference(DateTime.now()).inDays.abs().toString()),
                             Text(" Days Ago"),
                           ],
                         ),
                         GestureDetector(
                           onTap: () {
                             Share.share(
-                                'Lost/Found ${selectedItems[val].name} at ${selectedItems[val].location}, pdfURL: ${selectedItems[val].pdfLink}, if Found call: ${selectedItems[val].phone}');
+                                'Lost/Found ${selectedItems[val].name} at ${selectedItems[val].location}, adURL: https://cwservices.co.in/globalsearch/item.php?id=${selectedItems[val].adID}, if Found call: ${selectedItems[val].phone}');
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -354,7 +354,7 @@ class _ViewAllState extends State<ViewAll> {
 }
 
 class CardView extends StatelessWidget {
-  final img, name, location, status, reward, desc,additionalinfo,phone,pdfLink;
+  final img, name, location, status, reward, desc,additionalinfo,phone,adID;
 
   CardView(
       {this.img,
@@ -365,7 +365,7 @@ class CardView extends StatelessWidget {
       this.desc,
       this.additionalinfo,
       this.phone,
-        this.pdfLink,
+        this.adID,
       });
 
   @override
@@ -461,14 +461,14 @@ class CardView extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 5.0),
                   child: Icon(Icons.access_time),
                 ),
-                Text(" "+DateTime.parse(additionalinfo['date']).difference(DateTime.now()).inDays.toString()),
+                Text(" "+DateTime.parse(additionalinfo['date']).difference(DateTime.now()).inDays.abs().toString()),
                 Text(" Days Ago"),
               ],
             ),
             GestureDetector(
               onTap: () {
                 Share.share(
-                    'Lost $name at $location, pdfURL: $pdfLink, if Found call: $phone');
+                    'Lost $name at $location, adURL: https://cwservices.co.in/globalsearch/item.php?id=$adID, if Found call: $phone');
               },
               child: Container(
                 decoration: BoxDecoration(
